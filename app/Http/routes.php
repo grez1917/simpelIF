@@ -15,10 +15,16 @@
 //     return view('welcome');
 // });
 
+Route::controllers([
+	'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController',
+]);
+
 #Login
 Route::get('/','HomeController@index');
 Route::get('/login', 'HomeController@login');
-Route::get('/login', 'HomeController@login');
+Route::post('/login', array('before' => 'csrf', 'uses' => 'HomeController@login'));
+Route::get('/logout', 'HomeController@logout');
 
 #Setting
 Route::get('settings', 'SettingController@index');

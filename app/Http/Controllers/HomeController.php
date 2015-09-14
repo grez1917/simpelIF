@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use DB;
+use Request;
+use Auth;
+use Input;
 
 class HomeController extends Controller
 {
@@ -16,12 +16,43 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.home.welcome');
+        if(Auth::check())
+        {
+            return view('pages.home.welcome');
+        }
+        else
+        {
+            return redirect('/login');
+        }
     }
 
     public function login()
     {
-        return view('pages.home.login');
+        if (Request::isMethod('get'))
+        {
+            // $this->data = array();
+            // $this->data ['ins'] = InOut::where('enabled', '=', 1)->where('status', '=', 1)->get();
+            
+            return view('pages.home.login');
+        }
+        else if (Request::isMethod('post'))
+        {
+            // dd('test');
+            $credentials = Input::only('username','password');
+
+            if (Auth::attempt($credentials, true))
+            {
+                return redirect()->intended('/');
+            }
+            return redirect('/login');
+        }
+    }
+
+    public function logout()
+    {
+        //dd('test');
+        Auth::logout();
+        return redirect('/login');
     }
     /**
      * Show the form for creating a new resource.
@@ -30,7 +61,7 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.home.create');
     }
 
     /**

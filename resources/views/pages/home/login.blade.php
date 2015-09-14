@@ -8,13 +8,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>simpel IF</title>
+    <title>| simpel IF </title>
+    <link rel="shortcut icon" href="{{ URL::to('../resources/assets/gentelella/images/header2.PNG') }}">
 
     <!-- Bootstrap core CSS -->
 
     <link href="../resources/assets/gentelella/css/bootstrap.min.css" rel="stylesheet">
 
-    <link href="f../resources/assets/gentelella/onts/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../resources/assets/gentelella/fonts/css/font-awesome.min.css" rel="stylesheet">
     <link href="../resources/assets/gentelella/css/animate.min.css" rel="stylesheet">
 
     <!-- Custom styling plus plugins -->
@@ -45,16 +46,17 @@
         <div id="wrapper">
             <div id="login" class="animate form">
                 <section class="login_content">
-                    <form>
+                    <form method="POST" >
                         <h1>Login simpel IF</h1>
                         <div>
-                            <input type="text" class="form-control" placeholder="Username" required="" />
+                            <input type="text" class="form-control" placeholder="Username" name='username'/>
                         </div>
                         <div>
-                            <input type="password" class="form-control" placeholder="Password" required="" />
+                            <input type="password" class="form-control" placeholder="Password" name='password'/>
                         </div>
                         <div>
-                            <a class="btn btn-default submit" href="index.html">Log in</a>
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-default submit">Login</button>
                             <a class="reset_pass" href="#">Lupa password</a>
                         </div>
                         <div class="clearfix"></div>

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use DB;
+use Request;
+use Auth;
+use Input;
 
 class SettingController extends Controller
 {
@@ -16,7 +16,14 @@ class SettingController extends Controller
      */
     public function index()
     {
-        return view('pages.settings.index');
+        if(Auth::check())
+        {
+            return view('pages.settings.index');
+        }
+        else
+        {
+            return redirect('/login');
+        }
     }
 
     /**
