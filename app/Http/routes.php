@@ -28,3 +28,6 @@ Route::get('/logout', 'HomeController@logout');
 
 #Setting
 Route::get('settings', 'SettingController@index');
+Route::get('settings/profile', 'SettingController@profile');
+Route::get('settings/password', 'SettingController@password');
+Route::get('settings/email', 'SettingController@email');

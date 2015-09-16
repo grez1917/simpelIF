@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use View;
 use Request;
-use Auth;
 use Input;
+use Hash;
+use Auth;
+use App\Models\Menu;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SettingController extends Controller
 {
@@ -18,7 +21,9 @@ class SettingController extends Controller
     {
         if(Auth::check())
         {
-            return view('pages.settings.index');
+            $this->data = array();
+            $this->data['items'] = Menu::where('enabled', '=', 1)->where('menuid', '=', 1)->get();
+            return view('pages.settings.index', $this->data);
         }
         else
         {
@@ -26,6 +31,17 @@ class SettingController extends Controller
         }
     }
 
+    public function profile()
+    {
+        if(Auth::check())
+        {
+             return view('pages.settings.profile');
+        }
+        else
+        {
+            return redirect('/login');
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -26,7 +26,19 @@ class Simpelif extends Migration
             $table->nullableTimestamps();
         });
 
+        Schema::create('menu', function($table)
+        {
+            $table->increments('id');
+            $table->integer('menuid')->unsigned()->index();
+            $table->string('name', 100)->nullable();
+            $table->string('url', 100)->nullable();
+            $table->integer('order')->nullable();
+            $table->boolean('enabled')->nullable();
+            $table->softDeletes();
+            $table->nullableTimestamps();
+        });
     }
+
 
     /**
      * Reverse the migrations.
@@ -36,5 +48,6 @@ class Simpelif extends Migration
     public function down()
     {
          Schema::drop('user');
+         Schema::drop('menu');
     }
 }

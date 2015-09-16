@@ -12,12 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('user')->insert([
-            'id' => 1,
-            'username' => 'user1',
-            'password' => bcrypt('user1'),
-            'email' => 'user1@gmail.com',
-            'name' => 'user1',
-        ]);
+        // DB::table('user')->insert([
+        //     'id' => 1,
+        //     'username' => 'user1',
+        //     'password' => bcrypt('user1'),
+        //     'email' => 'user1@gmail.com',
+        //     'name' => 'user1',
+        // ]);
+
+        $this->call('MenuSeeder');
     }
 }

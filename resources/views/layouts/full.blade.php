@@ -27,6 +27,7 @@
 
                     <!-- sidebar menu -->
                         @include('includes.sidebarMenu')
+                        @yield('sideMenu')
                     <!-- /sidebar menu -->
 
                     <!-- /menu footer buttons -->
