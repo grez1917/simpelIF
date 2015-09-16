@@ -29,5 +29,12 @@ Route::get('/logout', 'HomeController@logout');
 #Setting
 Route::get('settings', 'SettingController@index');
 Route::get('settings/profile', 'SettingController@profile');
+#update password
 Route::get('settings/password', 'SettingController@password');
+Route::post('settings/password', array('before'=>'csrf', 'uses'=>'SettingController@password'));
+#update Email
 Route::get('settings/email', 'SettingController@email');
+Route::post('settings/email', array('before'=>'csrf', 'uses'=>'SettingController@email'));
+
+#user
+Route::get('user', 'UserController@index');

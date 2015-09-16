@@ -8,7 +8,8 @@ use Input;
 use Hash;
 use Auth;
 use App\Models\Menu;
-use Illuminate\Pagination\LengthAwarePaginator;
+Use App\Models\User;
+use Illuminate\Routing\Redirector;
 
 class SettingController extends Controller
 {
@@ -23,6 +24,7 @@ class SettingController extends Controller
         {
             $this->data = array();
             $this->data['items'] = Menu::where('enabled', '=', 1)->where('menuid', '=', 1)->get();
+            //dd($this->data);
             return view('pages.settings.index', $this->data);
         }
         else
@@ -35,7 +37,66 @@ class SettingController extends Controller
     {
         if(Auth::check())
         {
-             return view('pages.settings.profile');
+            $this->data['items'] = Menu::where('enabled', '=', 1)->where('menuid', '=', 1)->get();
+            return view('pages.settings.profile', $this->data);
+        }
+        else
+        {
+            return redirect('/login');
+        }
+    }
+
+    public function password()
+    {
+        if(Auth::check())
+        { 
+            if(Request::isMethod('get'))
+            {
+                $this->data['menus'] = Menu::where('enabled', '=', 1)->where('menuid', '=', 1)->get();
+                return view('pages.settings.password',  $this->data);
+            }
+            if(Request::isMethod('post'))
+            {
+                $getPass = Input::get('password2');
+                $passHash = Hash::make($getPass);
+                $username =Auth::user()->username;
+                $userid =Auth::user()->id;
+                $userPass = Auth::user()->password;
+                
+                $newPass = User::where('id', $userid)->update(array('password'=>$passHash));
+                return redirect('settings');
+            }
+        }
+        else
+        {
+            return redirect('/login');
+        }
+    }
+
+    public function email()
+    {
+        if(Auth::check())
+        {
+            if(Request::isMethod('get'))
+            {
+                $userid =Auth::user()->id;
+                
+                $this->data['menus'] = Menu::where('enabled', '=', 1)->where('menuid', '=', 1)->get();
+                $this->data['users'] = User::where('id', '=', $userid)->get();
+
+                //dd($this->data);
+                return view('pages.settings.email',  $this->data);
+            }
+            if(Request::isMethod('post'))
+            {
+                $getEmail = Input::get('newEmail');
+
+                $userid =Auth::user()->id;
+
+                //dd($getEmail);
+                $newPass = User::where('id', $userid)->update(array('email'=>$getEmail));
+                return redirect('settings/email');
+            }
         }
         else
         {
